@@ -104,7 +104,7 @@ You will update the Account service that you built in the previous lab to add so
 
 1. Add new dependencies to the Maven POM
 
-  Open the `pom.xml` in your `accounts` project and add these new dependency to the list. It will add support for the LRA client libraries.
+  Open the `pom.xml` in your `account` project and add these new dependency to the list. It will add support for the LRA client libraries.
 
     ```xml
       <copy>
@@ -216,9 +216,9 @@ The Deposit service will process deposits into bank accounts.  In this task, you
 
 1. Create the Deposit service and scaffold methods
 
-  Create a new directory in `src/main/java/com/example/accounts` called `services` and in that directory create a new Java file called `DepositService.java`.  This will be a Spring Boot component where you will implement the deposit operations.  Since the LRA library we are using only works with JAX-RS, you will be using JAX-RS annotations in this service, as opposed to the Spring Boot "web" REST annotations that you used in the previous lab.  You can mix and match these styles in a single Spring Boot microservice application.
+  Create a new directory in `src/main/java/com/example/accounts` called `services` and in that directory create a new Java file called `DepositService.java`.  This will be a Spring Boot component where you will implement the deposit operations. 
 
-  Start by setting up endpoints and methods with the appropriate annotations.  You will implement the logic for each of these methods shortly.  Here is the class definition and all the imports you will need in this section, plus the logger and a constant `DEPOSIT` you will use later.  Notice that the class has the `@RequestScoped` annotation which tells Spring to create an instance of this class for each HTTP request (as opposed to for a whole session for example), the Spring Boot `@Component` annotation which marks this class as a bean that Spring can inject as a dependency when needed, and the `@Path` annotation to set the URL path for these endpoints.
+  Start by setting up endpoints and methods with the appropriate annotations.  You will implement the logic for each of these methods shortly.  Here is the class definition and all the imports you will need in this section, plus the logger and a constant `DEPOSIT` you will use later.
 
     ```java
     <copy>package com.example.accounts.services;
@@ -246,7 +246,7 @@ The Deposit service will process deposits into bank accounts.  In this task, you
 
 1. Create the LRA entry point
 
-  The first method you need will be the main entry point, the `deposit()` method.  This will have the `@POST` annotation so that it will respond to the HTTP POST method. And, it has the `@LRA` annotation.
+  The first method you need will be the main entry point, the `deposit()` method.  This will have the `@PostMapping` annotation so that it will respond to the HTTP POST method. And, it has the `@LRA` annotation.
 
   In the `@LRA` annotation, which marks this as an LRA participant, the `value` property is set to `LRA.Type.MANDATORY` which means that this method will refuse to perform any work unless it is part of an LRA. The `end` property is set to `false` which means that successful completion of this method does not in and of itself constitute successful completion of the LRA, in other words, this method expects that it will not be the only participant in the LRA.
 
@@ -337,7 +337,7 @@ The Deposit service will process deposits into bank accounts.  In this task, you
 
 1. Create the "after" LRA endpoint
 
-  Finally, you need an "after LRA" endpoint that implements any clean up logic that needs to be run after the completion of the LRA. This method is called regardless of the outcome of the LRA and must respond to the HTTP PUT method and is marked with the `@AfterLRA` annotation. ***IS THIS TRUE consumes = "text/plain"***
+  Finally, you need an "after LRA" endpoint that implements any clean up logic that needs to be run after the completion of the LRA. This method is called regardless of the outcome of the LRA and must respond to the HTTP PUT method and is marked with the `@AfterLRA` annotation. 
 
     ```java
     <copy>
@@ -583,7 +583,7 @@ The deposit service will be responsible for depositing funds into accounts. It w
 
 1. Implement the business logic for the **deposit** method.
 
-  This method should write a journal entry for the deposit, but should not update the account balance.  Here is the code for this method:
+  This method should write a journal entry for the deposit, but should not update the account balance.  Here is the code for this method, which is in `DepositService.java`:
 
     ```java
     <copy>
@@ -866,7 +866,7 @@ Next, you need to implement the withdraw service, which will be the second parti
     }</copy>
     ```  
 
-   That completes the implementation of the deposit service, and with that you are also done with the modifications for the Account Spring Boot microservice application to allow it to participate int he LRA.  Next, you will create the Transfer Spring Boot microservice application.
+   That completes the implementation of the deposit service, and with that you are also done with the modifications for the Account Spring Boot microservice application to allow it to participate in the LRA.  Next, you will create the Transfer Spring Boot microservice application.
 
 ## Task 8: Create the Transfer Service
 
@@ -922,7 +922,7 @@ Now, you will create another new Spring Boot microservice application and implem
 
   ![Add to Workspace](images/add-to-workspace.png " ")
 
-1. Add MicroTX  and Lombok to the `pom.xml` file
+1. Add MicroTX and Lombok to the `pom.xml` file
 
   Open the `pom.xml` file in the `transfer` project. Add the following to the pom.xml:
 
@@ -1479,4 +1479,4 @@ In this lab you have learned about the Saga pattern by implementing an account t
 
 * **Author** - Paul Parkinson, Mark Nelson, Andy Tael, Developer Evangelists, Oracle Database
 * **Contributors** - [](var:contributors)
-* **Last Updated By/Date** - Andy Tael, March 2024
+* **Last Updated By/Date** - Andy Tael, MaAprilrch 2024
